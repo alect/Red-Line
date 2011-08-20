@@ -14,7 +14,7 @@ package GameObjects
 		public function Player(x:Number, y:Number)
 		{
 			super(x, y);
-			this.makeGraphic(22, 22, 0xff0000ff);
+			this.makeGraphic(10, 10, 0xff0000ff);
 			
 			//set up our drag for natural movement
 			drag.x = PLAYER_WALK_SPEED * 8;
