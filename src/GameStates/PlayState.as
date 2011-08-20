@@ -1,5 +1,6 @@
 package GameStates
 {
+	import GameObjects.FBIAgent;
 	import GameObjects.Player;
 	
 	import Utilities.*;
@@ -12,32 +13,18 @@ package GameStates
 		//the player character in this instance. 
 		private var _player:Player;
 		
+		//the fbi agent to follow the player
+		private var _agent:FBIAgent;
 		
 		public override function create():void
 		{
-			_player = new Player(22, 22);
+			_player = new Player(20, 20);
 			this.add(_player);
 			
-			var simpleMap:Array = [];
-			for(var i:int = 0; i < 32; i++)
-			{
-				var column:Array = [];
-				
-				for(var j:int = 0; j < 24; j++)
-				{
-					column.push(0);
-				}
-				
-				simpleMap.push(column);
-			}
 			
+			_agent = new FBIAgent(0, 0, _player);
+			this.add(_agent);
 			
-			var playerGridPos:FlxPoint = new FlxPoint(Math.floor(_player.x/Globals.GRID_CELL_SIZE), Math.floor(_player.y/Globals.GRID_CELL_SIZE));
-			var fbiPos:FlxPoint = new FlxPoint(0, 0);
-			
-			var fbiPath:Array = AStar.A_Star(fbiPos, playerGridPos, simpleMap, 32, 24);
-			for each(var node:FlxPoint in fbiPath)
-				trace(node);
 			
 		}
 	}

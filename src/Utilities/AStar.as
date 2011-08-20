@@ -158,6 +158,6 @@ class Node
 	
 	public function toFlxPoint():FlxPoint
 	{
-		return new FlxPoint(this.x*Globals.GRID_CELL_SIZE, this.y*Globals.GRID_CELL_SIZE);
+		return new FlxPoint(this.x*Globals.GRID_CELL_SIZE + Globals.GRID_CELL_SIZE/2, this.y*Globals.GRID_CELL_SIZE + Globals.GRID_CELL_SIZE/2);
 	}
 }
