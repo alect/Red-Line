@@ -5,7 +5,9 @@ package GameObjects
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxTilemap;
 	import org.flixel.FlxU;
+	import org.flixel.FlxG;
 	
 	public class FBIAgent extends FlxSprite
 	{
@@ -23,13 +25,16 @@ package GameObjects
 		private var _followingPlayer:Boolean = false;
 		private var _player:Player;
 		
+		//And it looks like we'll need a reference to the floor map so we can perform proper A*
+		private var _map:FlxTilemap;
 		
-		public function FBIAgent(x:Number, y:Number, playerToFollow:Player)
+		
+		public function FBIAgent(x:Number, y:Number, playerToFollow:Player, floorMap:FlxTilemap)
 		{
 			super(x, y);
 			this.makeGraphic(10, 10, 0xffff0000);
 			_player = playerToFollow;
-			
+			_map = floorMap;
 		}
 		
 		public override function update():void
@@ -75,14 +80,20 @@ package GameObjects
 		//For now, let's just make an empty map. 
 		private function createAStarMap():Array
 		{
+			//Since we've got the rail line to care about, let's go ahead and say that the top part of the screen is off limits
 			var simpleMap:Array = [];
-			for(var i:int = 0; i < 32; i++)
+			for(var i:int = 0; i < _map.widthInTiles; i++)
 			{
 				var column:Array = [];
 				
-				for(var j:int = 0; j < 24; j++)
+				
+				for(var j:int = 0; j < Math.floor(FlxG.height/Globals.GRID_CELL_SIZE); j++)
 				{
-					column.push(0);
+					//if we're below the start of the tilemap, pretend there's a wall there. 
+					if(j < Math.floor(_map.y/Globals.GRID_CELL_SIZE))
+						column.push(1);
+					else
+						column.push(_map.getTile(i, j-Math.floor(_map.y/Globals.GRID_CELL_SIZE)));
 				}
 				
 				simpleMap.push(column);

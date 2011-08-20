@@ -50,7 +50,14 @@ package GameObjects
 			}
 			
 			super.update();
+			if(this.x < 0)
+				this.x = 0;
+			if(this.x+this.width > FlxG.width)
+				this.x = FlxG.width-this.width;
 			
+			//got to keep the player off the tracks unless there's a train there. 
+			if(this.y < 70)
+				this.y = 70;
 		}
 	}
 }
