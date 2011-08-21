@@ -25,6 +25,22 @@ package Utilities
 		[Embed(source="assets/art/commuter.png")]
 		public static var commuterArt:Class;
 		
+		//Sound effect
+		[Embed(source="assets/audio/trainclose.mp3")]
+		public static var trainCloseSound:Class;
+		
+		[Embed(source="assets/audio/trainmove.mp3")]
+		public static var trainMoveSound:Class;
+		
+		[Embed(source="assets/audio/trainopen2.mp3")]
+		public static var trainOpenSound:Class;
+		
+		[Embed(source="assets/audio/levelwin.mp3")]
+		public static var winSound:Class;
+		
+		[Embed(source="assets/audio/losesound.mp3")]
+		public static var loseSound:Class;
+		
 		//Levels 
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
 		public static var testLevel:Class;

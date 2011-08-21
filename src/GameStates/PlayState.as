@@ -11,6 +11,7 @@ package GameStates
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -93,7 +94,11 @@ package GameStates
 		private var _nextLevelText:FlxText;
 		private var _won:Boolean = false;
 		
-		
+		//sound effects for when we win or lose the level. 
+		private static var _winSound:FlxSound = new FlxSound();
+		_winSound.loadEmbedded(ResourceManager.winSound);
+		private static var _loseSound:FlxSound = new FlxSound();
+		_loseSound.loadEmbedded(ResourceManager.loseSound);
 		
 		public override function create():void
 		{
@@ -282,12 +287,14 @@ package GameStates
 					this.add(_loseText);
 					this.add(_resetText);
 					_lost = true;
+					_loseSound.play();
 				}
 				else
 				{
 					this.add(_winText);
 					this.add(_nextLevelText);
 					_won = true;
+					_winSound.play();
 				}
 			}
 			//let the FBI Agents dissapear if they get in the train without the player

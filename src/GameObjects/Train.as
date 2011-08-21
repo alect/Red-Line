@@ -1,12 +1,14 @@
 package GameObjects
 {
+	import GameStates.PlayState;
+	
+	import Utilities.ResourceManager;
+	
 	import org.flixel.FlxG;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
-	
-	import GameStates.PlayState;
-	import Utilities.ResourceManager;
 	
 	public class Train extends FlxSprite
 	{
@@ -36,6 +38,16 @@ package GameObjects
 		private var _rightDoor:FlxSprite;
 		
 		private var _doorsOpen:Boolean = false;
+		
+		//our sound effects
+		private static var _trainMoveSound:FlxSound = new FlxSound();
+		_trainMoveSound.loadEmbedded(ResourceManager.trainMoveSound);		
+		private static var _trainOpenSound:FlxSound = new FlxSound();
+		_trainOpenSound.loadEmbedded(ResourceManager.trainOpenSound);
+		private static var _trainCloseSound:FlxSound = new FlxSound();
+		_trainCloseSound.loadEmbedded(ResourceManager.trainCloseSound);
+		
+		
 		//The doors open gets a getter
 		public function get doorsOpen():Boolean
 		{
@@ -67,6 +79,9 @@ package GameObjects
 			
 			
 			_doorsOpen = false;
+			
+			
+			
 		}
 		
 		public override function update():void
@@ -85,6 +100,7 @@ package GameObjects
 						var simplePath:FlxPath = new FlxPath([pathPoint]);
 						this.followPath(simplePath, TRAIN_SPEED);
 						_state = ENTERING;
+						_trainMoveSound.play();
 					}
 					break;
 				case ENTERING:
@@ -103,6 +119,7 @@ package GameObjects
 						_state = WAITING_FOR_DOORS;
 						_doorsOpen = true;
 						PlayState.Instance.onTrainDoorsOpened();
+						_trainOpenSound.play();
 					}
 					break;
 				case WAITING_FOR_DOORS:
@@ -113,6 +130,7 @@ package GameObjects
 						_state = CLOSING_DOORS;
 						//Call the main event function
 						PlayState.Instance.onTrainDoorsClosed();
+						_trainCloseSound.play();
 					}
 					break;
 				case CLOSING_DOORS:
@@ -121,6 +139,7 @@ package GameObjects
 						var exitPoint:FlxPoint = new FlxPoint(-FlxG.width/2, this.height/2);
 						this.followPath(new FlxPath([exitPoint]), TRAIN_SPEED);
 						_state = LEAVING;
+						_trainMoveSound.play();
 					}
 					break;
 				case LEAVING:

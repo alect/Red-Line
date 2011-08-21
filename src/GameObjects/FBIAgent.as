@@ -243,7 +243,7 @@ package GameObjects
 			//now let's do a run through the agents to see where they are for reference. 
 			for each(var otherAgent:FBIAgent in PlayState.Instance.agents.members)
 			{
-				if(otherAgent != this)
+				if(otherAgent != this && otherAgent.active)
 				{
 					var gridPos:FlxPoint = otherAgent.getGridPos();
 					//do this if we're in bounds
