@@ -2,6 +2,7 @@ package GameStates
 {
 	import GameObjects.FBIAgent;
 	import GameObjects.Player;
+	import GameObjects.Train;
 	
 	import Utilities.*;
 	
@@ -13,11 +14,18 @@ package GameStates
 	
 	public class PlayState extends FlxState
 	{
+		
+		//our global instance. Useful so that objects can access the general game state
+		public static var Instance:PlayState;
+		
 		//the player character in this instance. 
 		private var _player:Player;
 		
 		//the fbi agent to follow the player
 		private var _agent:FBIAgent;
+		
+		//the train itself. 
+		private var _train:Train;
 		
 		//the floor everyone hangs out on. 
 		private var _floorMap:FlxTilemap;
@@ -91,6 +99,9 @@ package GameStates
 			
 			this.add(_floorMap);
 			
+			_train = new Train(3, 2);
+			this.add(_train);
+			
 			
 			_player = new Player(20, 120);
 			this.add(_player);
@@ -101,7 +112,7 @@ package GameStates
 			
 			_floorMap.solid = true;
 			
-			
+			Instance = this;
 			
 		}
 		
@@ -113,5 +124,14 @@ package GameStates
 			
 			super.update()
 		}
+		
+		//Essential Game State functions
+		public function trainDoorsOpen():Boolean
+		{
+			return _train.doorsOpen;
+		}
+		
+		
+		
 	}
 }
