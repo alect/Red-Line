@@ -22,7 +22,7 @@ package GameObjects
 		private static const MAX_DIS_TO_PLAYER:Number = 50;
 		
 		//the speed we follow the player at
-		private var WALK_SPEED:Number = 70;
+		private var WALK_SPEED:Number = 80;
 		
 		//looks like I'll at least need a variable to tell if we're following the player
 		private var _followingPlayer:Boolean = false;
@@ -145,7 +145,7 @@ package GameObjects
 				if(tile == 1)
 					this.WALK_SPEED = 10;
 				else
-					this.WALK_SPEED = 70;
+					this.WALK_SPEED = 80;
 				
 				if(this.pathSpeed != 0)
 					this.pathSpeed = WALK_SPEED;

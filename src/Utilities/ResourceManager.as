@@ -53,7 +53,19 @@ package Utilities
 		[Embed(source="assets/levels/level5.oel", mimeType="application/octet-stream")]
 		public static var level5:Class;
 		
+		[Embed(source="assets/levels/level7.oel", mimeType="application/octet-stream")]
+		public static var level7:Class;
+		
+		[Embed(source="assets/levels/level8.oel", mimeType="application/octet-stream")]
+		public static var level8:Class;
+		
+		[Embed(source="assets/levels/level9.oel", mimeType="application/octet-stream")]
+		public static var level9:Class;
+		
+		[Embed(source="assets/levels/level10.oel", mimeType="application/octet-stream")]
+		public static var level10:Class;
+		
 		//the array of levels. 
-		public static var levelList:Array = [verticalTest, level1, level2, level3, level5, level4, level6, testLevel, testLevel2];
+		public static var levelList:Array = [level10, level9, level8, level7, verticalTest, level1, level2, level3, level5, level4, level6, testLevel, testLevel2];
 	}
 }
