@@ -102,6 +102,7 @@ package GameObjects
 						_timeCounter = 0;
 						_state = WAITING_FOR_DOORS;
 						_doorsOpen = true;
+						PlayState.Instance.onTrainDoorsOpened();
 					}
 					break;
 				case WAITING_FOR_DOORS:

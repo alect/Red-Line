@@ -37,6 +37,7 @@ package Utilities
 				levelToReturn.agentLocations = [];
 				levelToReturn.leftCommuters = [];
 				levelToReturn.rightCommuters = [];
+				levelToReturn.verticalCommuters = [];
 				
 				//now grab all the data tiles
 				for each(dataElement in dataList)
@@ -70,6 +71,11 @@ package Utilities
 					{
 						//a left facing commuter
 						levelToReturn.leftCommuters.push(new FlxPoint(canonicalX*Globals.GRID_CELL_SIZE, canonicalY*Globals.GRID_CELL_SIZE));
+					}
+					if(dataElement.@tx == 30 && dataElement.@ty == 20)
+					{
+						//a vertical commuter
+						levelToReturn.verticalCommuters.push(new FlxPoint(canonicalX*Globals.GRID_CELL_SIZE, canonicalY*Globals.GRID_CELL_SIZE));
 					}
 				}
 				

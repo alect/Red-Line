@@ -22,6 +22,9 @@ package Utilities
 		//A list of the right moving commuters in the level
 		public var rightCommuters:Array;
 		
+		//A list of the vertical moving commuters in the level. 
+		public var verticalCommuters:Array;
+		
 		
 		public function Level()
 		{

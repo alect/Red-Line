@@ -4,6 +4,7 @@ package GameStates
 	import GameObjects.FBIAgent;
 	import GameObjects.Player;
 	import GameObjects.Train;
+	import GameObjects.VerticalCommuter;
 	
 	import Utilities.*;
 	
@@ -39,6 +40,9 @@ package GameStates
 		
 		//the commuters to get in the way and/or help the player
 		private var _commuters:FlxGroup;
+		
+		//the vertical commuters who get off the train when it arrives
+		private var _verticalCommuters:FlxGroup;
 		
 		//the train itself. 
 		private var _train:Train;
@@ -172,12 +176,23 @@ package GameStates
 				_commuters.add(rightCommuter);
 			}
 			this.add(_commuters);
+			
+			_verticalCommuters = new FlxGroup();
+			for each(var verticalCommuterLoc:FlxPoint in level.verticalCommuters)
+			{
+				var verticalCommuter:VerticalCommuter = new VerticalCommuter(verticalCommuterLoc.x, verticalCommuterLoc.y);
+				_verticalCommuters.add(verticalCommuter);
+			}
+			this.add(_verticalCommuters);
+			
 		}
 		
 		public override function update():void
 		{
 			FlxG.collide(_player, _commuters);
+			FlxG.collide(_player, _verticalCommuters);
 			FlxG.collide(_agents, _commuters);
+			FlxG.collide(_agents, _verticalCommuters);
 			FlxG.collide(_player, _floorMap);
 			FlxG.collide(_player, _borderMap);
 			FlxG.collide(_agents, _floorMap);
@@ -219,6 +234,14 @@ package GameStates
 		{
 			return _train.getTrainDoors();
 		}
+		
+		//Function that's called when the train doors are opened. Causes the vertical commuters to spawn
+		public function onTrainDoorsOpened():void
+		{
+			for each(var verticalCommuter:VerticalCommuter in _verticalCommuters.members)
+				verticalCommuter.spawnInGame();
+		}
+		
 		
 		//Function that's called when the train doors close. Can handle making the player disappear etc. 
 		public function onTrainDoorsClosed():void

@@ -35,6 +35,9 @@ package Utilities
 		[Embed(source="assets/levels/testcommuters.oel", mimeType="application/octet-stream")]
 		public static var level6:Class;
 		
+		[Embed(source="assets/levels/verticaltest.oel", mimeType="application/octet-stream")]
+		public static var verticalTest:Class;
+		
 		[Embed(source="assets/levels/level1.oel", mimeType="application/octet-stream")]
 		public static var level1:Class;
 		
@@ -51,6 +54,6 @@ package Utilities
 		public static var level5:Class;
 		
 		//the array of levels. 
-		public static var levelList:Array = [level1, level2, level3, level5, level4, level6, testLevel, testLevel2];
+		public static var levelList:Array = [verticalTest, level1, level2, level3, level5, level4, level6, testLevel, testLevel2];
 	}
 }

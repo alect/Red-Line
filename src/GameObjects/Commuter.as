@@ -11,13 +11,14 @@ package GameObjects
 		//some constants to denote the direction we're moving in. 
 		public static const COMMUTER_RIGHT:uint = 0;
 		public static const COMMUTER_LEFT:uint = 1;
+		public static const COMMUTER_DOWN:uint = 2;
 		
 		//the amount of time before we reappear on the other side of the screen
 		private var _timeToRespawn:Number;
-		private var _timerCounter:Number = 0;
+		protected var _timerCounter:Number = 0;
 		private var _direction:uint;
 	
-		private static const COMMUTER_SPEED:Number = 130;
+		protected static const COMMUTER_SPEED:Number = 130;
 		
 		public function Commuter(x:Number, y:Number, direction:uint, respawnTime:Number=3.0)
 		{
@@ -34,6 +35,13 @@ package GameObjects
 		
 		public override function update():void
 		{
+			//if we're moving down, simply update and return
+			if(_direction == COMMUTER_DOWN)
+			{
+				super.update();
+				return;
+			}
+			
 			this.velocity = new FlxPoint();
 			
 			//first, if we're on screen, then we need to MOVE

@@ -1,0 +1,63 @@
+<level>
+  <width>320</width>
+  <height>170</height>
+  <grid set="Tiles">
+    <tile tx="30" ty="20" x="40" y="0"/>
+    <tile tx="30" ty="20" x="50" y="0"/>
+    <tile tx="30" ty="20" x="50" y="10"/>
+    <tile tx="30" ty="20" x="40" y="10"/>
+    <tile tx="30" ty="20" x="40" y="20"/>
+    <tile tx="30" ty="20" x="260" y="0"/>
+    <tile tx="30" ty="20" x="270" y="0"/>
+    <tile tx="30" ty="20" x="270" y="10"/>
+    <tile tx="0" ty="0" x="60" y="30"/>
+    <tile tx="0" ty="0" x="70" y="30"/>
+    <tile tx="0" ty="0" x="80" y="30"/>
+    <tile tx="0" ty="0" x="90" y="30"/>
+    <tile tx="0" ty="0" x="100" y="30"/>
+    <tile tx="0" ty="0" x="110" y="30"/>
+    <tile tx="0" ty="0" x="120" y="30"/>
+    <tile tx="0" ty="0" x="130" y="30"/>
+    <tile tx="0" ty="0" x="180" y="30"/>
+    <tile tx="0" ty="0" x="190" y="30"/>
+    <tile tx="0" ty="0" x="200" y="30"/>
+    <tile tx="0" ty="0" x="210" y="30"/>
+    <tile tx="0" ty="0" x="220" y="30"/>
+    <tile tx="0" ty="0" x="230" y="30"/>
+    <tile tx="0" ty="0" x="240" y="30"/>
+    <tile tx="0" ty="0" x="250" y="30"/>
+    <tile tx="10" ty="0" x="150" y="60"/>
+    <tile tx="20" ty="0" x="150" y="100"/>
+    <tile tx="40" ty="0" x="40" y="140"/>
+    <tile tx="40" ty="0" x="50" y="140"/>
+    <tile tx="40" ty="0" x="60" y="140"/>
+    <tile tx="40" ty="0" x="70" y="150"/>
+    <tile tx="40" ty="0" x="70" y="160"/>
+    <tile tx="40" ty="0" x="60" y="160"/>
+    <tile tx="40" ty="0" x="50" y="160"/>
+    <tile tx="40" ty="0" x="40" y="160"/>
+    <tile tx="40" ty="0" x="60" y="150"/>
+    <tile tx="40" ty="0" x="50" y="150"/>
+    <tile tx="40" ty="0" x="40" y="150"/>
+    <tile tx="40" ty="0" x="30" y="150"/>
+    <tile tx="40" ty="0" x="30" y="160"/>
+    <tile tx="40" ty="0" x="20" y="160"/>
+    <tile tx="40" ty="0" x="20" y="150"/>
+    <tile tx="40" ty="0" x="260" y="160"/>
+    <tile tx="40" ty="0" x="260" y="150"/>
+    <tile tx="40" ty="0" x="270" y="140"/>
+    <tile tx="40" ty="0" x="280" y="140"/>
+    <tile tx="40" ty="0" x="290" y="140"/>
+    <tile tx="40" ty="0" x="300" y="140"/>
+    <tile tx="40" ty="0" x="310" y="140"/>
+    <tile tx="40" ty="0" x="310" y="150"/>
+    <tile tx="40" ty="0" x="300" y="150"/>
+    <tile tx="40" ty="0" x="280" y="160"/>
+    <tile tx="40" ty="0" x="270" y="160"/>
+    <tile tx="40" ty="0" x="270" y="150"/>
+    <tile tx="40" ty="0" x="280" y="150"/>
+    <tile tx="40" ty="0" x="290" y="150"/>
+    <tile tx="40" ty="0" x="290" y="160"/>
+    <tile tx="40" ty="0" x="300" y="160"/>
+  </grid>
+</level>
