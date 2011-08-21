@@ -59,9 +59,15 @@ package GameStates
 		
 		
 		
-		//The map used to represent the border of the world. Simple way of keeping the player off the screen. 
+		//The map used to represent the border of the world. Simple way of keeping the player off the screen.
+		//Notice how it specifically has marks carved out for the train doors
 		private var _borderMap:FlxTilemap;
 		private var _borderMapString:String =
+			"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\n" +
+			"1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1\n" +
+			"1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1\n" +
+			"1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1\n" +
+			"1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1\n" +
 			"1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1\n" +
 			"1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1\n" +
 			"1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1\n" +
@@ -83,15 +89,19 @@ package GameStates
 		
 		public override function create():void
 		{
+			
+			//The border map doesn't even have to be visible, but we'll just put it at the bottom for now. 
+			_borderMap = new FlxTilemap();
+			_borderMap.loadMap(_borderMapString, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
+			_borderMap.x = -10;
+			_borderMap.y = 20;
+			this.add(_borderMap);
+			
 			//first place the background train tracks
 			var trainTracks:FlxSprite = new FlxSprite(0, 0, ResourceManager.trainTrackArt);
 			this.add(trainTracks);
 			
-			_borderMap = new FlxTilemap();
-			_borderMap.loadMap(_borderMapString, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
-			_borderMap.x = -10;
-			_borderMap.y = 70;
-			this.add(_borderMap);
+			
 			
 			_floorMap = new FlxTilemap();
 			_floorMap.loadMap(_simpleMap, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
@@ -129,6 +139,50 @@ package GameStates
 		public function trainDoorsOpen():Boolean
 		{
 			return _train.doorsOpen;
+		}
+		
+		public function trainDoorList():Array
+		{
+			return _train.getTrainDoors();
+		}
+		
+		//Function that's called when the train doors close. Can handle making the player disappear etc. 
+		public function onTrainDoorsClosed():void
+		{
+			//If the player is inside the train doors, the player is now inside the train
+			if(_player.inTrainDoors)
+			{
+				_player.insideTrain = true;
+				_player.active = false;
+				_player.visible = false;
+			}
+			//Same with the FBI Agent
+			if(_agent.inTrainDoors && _agent.active)
+			{
+				_agent.insideTrain = true;
+				_agent.active = false;
+				_agent.visible = false;
+			}
+		}
+		
+		//Function that's called when the train leaves the station. Time to check victory and loss conditions
+		public function onTrainLeaveStation():void
+		{
+			//Now check our victory and loss conditions
+			if(_player.insideTrain)
+			{
+				if(_agent.insideTrain)
+					trace("LOSE!!");
+				else
+					trace("WIN!!");
+			}
+			//let the FBI Agents dissapear if they get in the train without the player
+			else if(_agent.insideTrain)
+			{
+				_agent.insideTrain = false;
+			}
+			
+			
 		}
 		
 		

@@ -1,14 +1,34 @@
 package GameObjects
 {
+	import GameStates.PlayState;
+	
+	import org.flixel.FlxG;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
-	import org.flixel.FlxG;
-	
 	
 	public class Player extends FlxSprite
 	{
 		
 		private static const PLAYER_WALK_SPEED:Number = 80;
+		
+		private var _inTrainDoors:Boolean = false;
+		private var _insideTrain:Boolean = false;
+		
+		//getters & setters
+		public function get inTrainDoors():Boolean
+		{
+			return _inTrainDoors;
+		}
+		
+		public function get insideTrain():Boolean
+		{
+			return _insideTrain;
+		}
+		public function set insideTrain(value:Boolean):void
+		{
+			_insideTrain = value;
+		}
 		
 		
 		public function Player(x:Number, y:Number)
@@ -55,9 +75,40 @@ package GameObjects
 			if(this.x+this.width > FlxG.width)
 				this.x = FlxG.width-this.width;
 			
-			//got to keep the player off the tracks unless there's a train there. 
+			//reset our inTrain state so we can update if we need to 
+			_inTrainDoors = false;
+			
+			//got to keep the player off the tracks unless there's a train there.
 			if(this.y < 70)
-				this.y = 70;
+			{	
+				//If the train has open doors, need to do some additional checks. 
+				if(PlayState.Instance.trainDoorsOpen())
+				{
+					//Need to be within the proper x-range of one of the doors. 
+					//Hmmm, somehow need access to the positions of the doors. 
+					var doors:Array = PlayState.Instance.trainDoorList();
+					var inRangeOfDoor:Boolean = false;
+					for each(var door:FlxObject in doors)
+					{
+						if(this.x >= door.x && this.x + this.width <= door.x+door.width)
+						{
+							inRangeOfDoor = true;
+							//Now check whether we're actually inside the door as well
+							if(this.y+this.height <= door.y+door.height)
+								_inTrainDoors = true;
+							
+						}
+					}
+					
+					if(!inRangeOfDoor)
+						this.y = 70;
+					
+					
+					
+				}
+				else
+					this.y = 70;
+			}
 		}
 	}
 }

@@ -4,6 +4,8 @@ package GameObjects
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	
+	import GameStates.PlayState;
 
 	public class Train extends FlxSprite
 	{
@@ -107,6 +109,8 @@ package GameObjects
 						_timeCounter = 0;
 						_doorsOpen = false;
 						_state = CLOSING_DOORS;
+						//Call the main event function
+						PlayState.Instance.onTrainDoorsClosed();
 					}
 					break;
 				case CLOSING_DOORS:
@@ -124,6 +128,9 @@ package GameObjects
 						velocity = new FlxPoint(0, 0);
 						this.x = FlxG.width;
 						_state = WAITING_TO_ENTER;
+						//If we've officially left the station, time to check victory conditions.
+						PlayState.Instance.onTrainLeaveStation();
+						
 					}
 					break;
 					
@@ -155,6 +162,13 @@ package GameObjects
 				_rightDoor.draw();
 			}
 			
+		}
+		
+		
+		//A function to access the positions of the train doors (should be kept up to date by the draw function)
+		public function getTrainDoors():Array
+		{
+			return [_leftDoor, _middleDoor, _rightDoor];
 		}
 		
 		
