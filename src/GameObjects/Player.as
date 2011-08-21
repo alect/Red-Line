@@ -7,6 +7,8 @@ package GameObjects
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	
+	import Utilities.ResourceManager;
+	
 	public class Player extends FlxSprite
 	{
 		
@@ -33,13 +35,17 @@ package GameObjects
 		
 		public function Player(x:Number, y:Number)
 		{
-			super(x, y);
-			this.makeGraphic(10, 10, 0xff0000ff);
+			super(x, y, ResourceManager.playerArt);
+			//this.makeGraphic(10, 10, 0xff0000ff);
+			this.width = 10;
+			this.height=10;
+			this.offset.y = 2.5;
 			
 			//set up our drag for natural movement
 			drag.x = PLAYER_WALK_SPEED * 8;
 			drag.y = PLAYER_WALK_SPEED * 8;
 			this.maxVelocity = new FlxPoint(PLAYER_WALK_SPEED, PLAYER_WALK_SPEED);
+		
 		}
 		
 		public override function update():void
@@ -67,7 +73,15 @@ package GameObjects
 				{
 					this.acceleration.x = drag.x;
 				}
+				
+				//update our max-velocity to take diagonal movement into account
+				if( (FlxG.keys.UP && FlxG.keys.LEFT) || (FlxG.keys.UP && FlxG.keys.RIGHT) || (FlxG.keys.DOWN && FlxG.keys.LEFT) || (FlxG.keys.DOWN && FlxG.keys.RIGHT))
+					this.maxVelocity = new FlxPoint(PLAYER_WALK_SPEED*Math.SQRT1_2, PLAYER_WALK_SPEED*Math.SQRT1_2);
+				else
+					this.maxVelocity = new FlxPoint(PLAYER_WALK_SPEED, PLAYER_WALK_SPEED);
 			}
+			
+			
 			
 			super.update();
 			if(this.x < 0)

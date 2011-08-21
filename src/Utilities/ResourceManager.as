@@ -10,6 +10,17 @@ package Utilities
 		[Embed(source="assets/art/traintracks.png")]
 		public static var trainTrackArt:Class;
 		
+		[Embed(source="assets/art/player.png")]
+		public static var playerArt:Class;
+		
+		[Embed(source="assets/art/agent.png")]
+		public static var agentArt:Class;
+		
+		[Embed(source="assets/art/train.png")]
+		public static var trainArt:Class;
+		
+		[Embed(source="assets/art/traindoor.png")]
+		public static var trainDoorArt:Class;
 		
 		//Levels 
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]

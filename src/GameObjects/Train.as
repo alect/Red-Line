@@ -6,7 +6,8 @@ package GameObjects
 	import org.flixel.FlxSprite;
 	
 	import GameStates.PlayState;
-
+	import Utilities.ResourceManager;
+	
 	public class Train extends FlxSprite
 	{
 		
@@ -48,21 +49,21 @@ package GameObjects
 			_timeDoorsOpen = timeDoorsOpen;
 			
 			//The train always starts off to the right of the screen.
-			super(FlxG.width, 0);
-			this.makeGraphic(FlxG.width, 60, 0xff808080);
+			super(FlxG.width, 0, ResourceManager.trainArt);
+			//this.makeGraphic(FlxG.width, 60, 0xff808080);
 			
 			//our default starting state is waiting to enter. 
 			_state = WAITING_TO_ENTER;
 			_timeCounter = 0;
 			
-			_leftDoor = new FlxSprite(0, 0);
-			_leftDoor.makeGraphic(20, 30, 0xffffff00);
+			_leftDoor = new FlxSprite(0, 0, ResourceManager.trainDoorArt);
+			//_leftDoor.makeGraphic(20, 30, 0xffffff00);
 			
-			_middleDoor = new FlxSprite(0, 0);
-			_middleDoor.makeGraphic(20, 30, 0xffffff00);
+			_middleDoor = new FlxSprite(0, 0, ResourceManager.trainDoorArt);
+			//_middleDoor.makeGraphic(20, 30, 0xffffff00);
 			
-			_rightDoor = new FlxSprite(0, 0);
-			_rightDoor.makeGraphic(20, 30, 0xffffff00);
+			_rightDoor = new FlxSprite(0, 0, ResourceManager.trainDoorArt);
+			//_rightDoor.makeGraphic(20, 30, 0xffffff00);
 			
 			
 			_doorsOpen = false;
@@ -155,7 +156,7 @@ package GameObjects
 			_rightDoor.y = this.y+this.height-_rightDoor.height;
 			
 			
-			if(_doorsOpen)
+			if(!_doorsOpen)
 			{
 				_leftDoor.draw();
 				_middleDoor.draw();

@@ -68,8 +68,10 @@ package GameObjects
 		
 		public function FBIAgent(x:Number, y:Number, playerToFollow:Player, floorMap:FlxTilemap)
 		{
-			super(x, y);
-			this.makeGraphic(10, 10, 0xffff0000);
+			super(x, y, ResourceManager.agentArt);
+			this.height = 10;
+			this.offset.y = 2.5;
+			
 			_player = playerToFollow;
 			_map = floorMap;
 		}
