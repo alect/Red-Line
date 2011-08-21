@@ -16,6 +16,12 @@ package Utilities
 		//A list of FBI agents to spawn in the level
 		public var agentLocations:Array;
 		
+		//A list of the left moving commuters in the level
+		public var leftCommuters:Array;
+		
+		//A list of the right moving commuters in the level
+		public var rightCommuters:Array;
+		
 		
 		public function Level()
 		{

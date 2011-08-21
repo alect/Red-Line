@@ -12,7 +12,7 @@ package GameObjects
 	public class Player extends FlxSprite
 	{
 		
-		private static const PLAYER_WALK_SPEED:Number = 80;
+		private static const PLAYER_WALK_SPEED:Number = 60;
 		
 		private var _inTrainDoors:Boolean = false;
 		private var _insideTrain:Boolean = false;

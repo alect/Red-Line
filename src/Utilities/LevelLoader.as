@@ -35,6 +35,8 @@ package Utilities
 				
 				var levelToReturn:Level = new Level();
 				levelToReturn.agentLocations = [];
+				levelToReturn.leftCommuters = [];
+				levelToReturn.rightCommuters = [];
 				
 				//now grab all the data tiles
 				for each(dataElement in dataList)
@@ -54,6 +56,16 @@ package Utilities
 					if(dataElement.@tx == 20 && dataElement.@ty == 0)
 					{
 						levelToReturn.agentLocations.push(new FlxPoint(canonicalX*Globals.GRID_CELL_SIZE, canonicalY*Globals.GRID_CELL_SIZE));
+					}
+					if(dataElement.@tx == 30 && dataElement.@ty == 0)
+					{
+						//a right facing commuter
+						levelToReturn.rightCommuters.push(new FlxPoint(canonicalX*Globals.GRID_CELL_SIZE, canonicalY*Globals.GRID_CELL_SIZE));
+					}
+					if(dataElement.@tx == 30 && dataElement.@ty == 10)
+					{
+						//a left facing commuter
+						levelToReturn.leftCommuters.push(new FlxPoint(canonicalX*Globals.GRID_CELL_SIZE, canonicalY*Globals.GRID_CELL_SIZE));
 					}
 				}
 				

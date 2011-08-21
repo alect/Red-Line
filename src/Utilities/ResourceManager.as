@@ -22,6 +22,9 @@ package Utilities
 		[Embed(source="assets/art/traindoor.png")]
 		public static var trainDoorArt:Class;
 		
+		[Embed(source="assets/art/commuter.png")]
+		public static var commuterArt:Class;
+		
 		//Levels 
 		[Embed(source="assets/levels/testlevel.oel", mimeType="application/octet-stream")]
 		public static var testLevel:Class;
@@ -29,7 +32,10 @@ package Utilities
 		[Embed(source="assets/levels/testlevel2.oel", mimeType="application/octet-stream")]
 		public static var testLevel2:Class;
 		
+		[Embed(source="assets/levels/testcommuters.oel", mimeType="application/octet-stream")]
+		public static var testCommuters:Class;
+		
 		//the array of levels. 
-		public static var levelList:Array = [testLevel, testLevel2];
+		public static var levelList:Array = [testCommuters, testLevel, testLevel2];
 	}
 }

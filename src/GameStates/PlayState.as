@@ -1,5 +1,6 @@
 package GameStates
 {
+	import GameObjects.Commuter;
 	import GameObjects.FBIAgent;
 	import GameObjects.Player;
 	import GameObjects.Train;
@@ -29,7 +30,9 @@ package GameStates
 		
 		//the fbi agents to follow the player
 		private var _agents:FlxGroup;
-		private var _agent:FBIAgent;
+		
+		//the commuters to get in the way and/or help the player
+		private var _commuters:FlxGroup;
 		
 		//the train itself. 
 		private var _train:Train;
@@ -150,15 +153,30 @@ package GameStates
 				_agents.add(agent);
 			}
 			this.add(_agents);
+			
+			_commuters = new FlxGroup();
+			for each(var leftCommuterLoc:FlxPoint in level.leftCommuters)
+			{
+				var leftCommuter:Commuter = new Commuter(leftCommuterLoc.x, leftCommuterLoc.y+_floorMap.y, Commuter.COMMUTER_LEFT);
+				_commuters.add(leftCommuter);
+			}
+			for each(var rightCommuterLoc:FlxPoint in level.rightCommuters)
+			{
+				var rightCommuter:Commuter = new Commuter(rightCommuterLoc.x, rightCommuterLoc.y+_floorMap.y, Commuter.COMMUTER_RIGHT);
+				_commuters.add(rightCommuter);
+			}
+			this.add(_commuters);
 		}
 		
 		public override function update():void
 		{
-			
-			
+			FlxG.collide(_player, _commuters);
+			FlxG.collide(_agents, _commuters);
 			FlxG.collide(_player, _floorMap);
 			FlxG.collide(_player, _borderMap);
 			FlxG.collide(_agents, _floorMap);
+			FlxG.collide(_agents, _borderMap);
+			
 			
 			if(_lost && FlxG.mouse.justPressed())
 			{
