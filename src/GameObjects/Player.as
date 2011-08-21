@@ -2,20 +2,26 @@ package GameObjects
 {
 	import GameStates.PlayState;
 	
+	import Utilities.ResourceManager;
+	import Utilities.Globals;
+	
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxTilemap;
 	
-	import Utilities.ResourceManager;
 	
 	public class Player extends FlxSprite
 	{
 		
-		private static const PLAYER_WALK_SPEED:Number = 60;
+		private static var PLAYER_WALK_SPEED:Number = 60;
 		
 		private var _inTrainDoors:Boolean = false;
 		private var _insideTrain:Boolean = false;
+		
+		private var _map:FlxTilemap;
+		
 		
 		//getters & setters
 		public function get inTrainDoors():Boolean
@@ -33,7 +39,7 @@ package GameObjects
 		}
 		
 		
-		public function Player(x:Number, y:Number)
+		public function Player(x:Number, y:Number, map:FlxTilemap)
 		{
 			super(x, y, ResourceManager.playerArt);
 			//this.makeGraphic(10, 10, 0xff0000ff);
@@ -45,7 +51,7 @@ package GameObjects
 			drag.x = PLAYER_WALK_SPEED * 8;
 			drag.y = PLAYER_WALK_SPEED * 8;
 			this.maxVelocity = new FlxPoint(PLAYER_WALK_SPEED, PLAYER_WALK_SPEED);
-		
+			_map = map;
 		}
 		
 		public override function update():void
@@ -72,6 +78,17 @@ package GameObjects
 				if(FlxG.keys.RIGHT)
 				{
 					this.acceleration.x = drag.x;
+				}
+				
+				var floorLoc:FlxPoint = new FlxPoint(Math.floor((this.x - _map.x)/Globals.GRID_CELL_SIZE), Math.floor((this.y-_map.y)/Globals.GRID_CELL_SIZE));
+				if(floorLoc.x > 0 && floorLoc.y > 0)
+				{
+					var tile:int = _map.getTile(int(floorLoc.x), int(floorLoc.y));
+					if(tile == 1)
+						PLAYER_WALK_SPEED = 20;
+					else
+						PLAYER_WALK_SPEED = 60;
+					
 				}
 				
 				//update our max-velocity to take diagonal movement into account

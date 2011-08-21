@@ -149,7 +149,7 @@ package GameStates
 			_train = new Train(3, 2);
 			this.add(_train);
 			
-			_player = new Player(level.playerStartLocation.x, level.playerStartLocation.y+_floorMap.y);
+			_player = new Player(level.playerStartLocation.x, level.playerStartLocation.y+_floorMap.y, _floorMap);
 			this.add(_player);
 			
 			_agents = new FlxGroup();
