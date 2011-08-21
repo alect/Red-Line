@@ -175,7 +175,7 @@ package GameStates
 					loadFromLevel(_currentLevel);
 				}
 				else
-					trace("NO MORE LEVELS!!");
+					FlxG.switchState(new EndingState());
 			}
 			
 			super.update()
