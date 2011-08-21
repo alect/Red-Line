@@ -1,0 +1,13 @@
+<project>
+  <name>Red Line</name>
+  <settings>
+    <defaultWidth>320</defaultWidth>
+    <defaultHeight>170</defaultHeight>
+  </settings>
+  <tilesets>
+    <tileset name="Tiles" image="tileset.png" tileHeight="10" tileWidth="10" />
+  </tilesets>
+  <layers>
+    <tiles name="grid" gridSize="10"/>
+  </layers>
+</project>

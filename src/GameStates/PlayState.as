@@ -7,6 +7,7 @@ package GameStates
 	import Utilities.*;
 	
 	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
@@ -18,10 +19,15 @@ package GameStates
 		//our global instance. Useful so that objects can access the general game state
 		public static var Instance:PlayState;
 		
+		//the trainTracks to render
+		var _trainTracks:FlxSprite;
+		
+		
 		//the player character in this instance. 
 		private var _player:Player;
 		
-		//the fbi agent to follow the player
+		//the fbi agents to follow the player
+		private var _agents:FlxGroup;
 		private var _agent:FBIAgent;
 		
 		//the train itself. 
@@ -95,42 +101,63 @@ package GameStates
 			_borderMap.loadMap(_borderMapString, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
 			_borderMap.x = -10;
 			_borderMap.y = 20;
-			this.add(_borderMap);
+			
 			
 			//first place the background train tracks
-			var trainTracks:FlxSprite = new FlxSprite(0, 0, ResourceManager.trainTrackArt);
-			this.add(trainTracks);
+			_trainTracks = new FlxSprite(0, 0, ResourceManager.trainTrackArt);
+			
+			//Let's test out loading our levels. 
+			var testLevel:Level = LevelLoader.loadLevel(ResourceManager.testLevel);
+			
+			
+			//and let's load from our level. 
+			clearLevel();
+			loadFromLevel(testLevel);
 			
 			
 			
+			
+			
+			
+			
+			Instance = this;
+			
+		}
+		
+		private function clearLevel():void
+		{
+			this.clear();
+			this.add(_borderMap);
+			this.add(_trainTracks);
+		}
+		
+		private function loadFromLevel(level:Level):void
+		{
 			_floorMap = new FlxTilemap();
-			_floorMap.loadMap(_simpleMap, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
+			_floorMap.loadMap(level.gridCSV, ResourceManager.floorMapArt, 10, 10, FlxTilemap.OFF, 0, 0, 1);
 			_floorMap.y = 70;
-			
 			this.add(_floorMap);
 			
 			_train = new Train(3, 2);
 			this.add(_train);
 			
-			
-			_player = new Player(20, 120);
+			_player = new Player(level.playerStartLocation.x, level.playerStartLocation.y+_floorMap.y);
 			this.add(_player);
 			
-			
-			_agent = new FBIAgent(0, 100, _player, _floorMap);
-			this.add(_agent);
-			
-			_floorMap.solid = true;
-			
-			Instance = this;
-			
+			_agents = new FlxGroup();
+			for each(var agentLoc:FlxPoint in level.agentLocations)
+			{
+				var agent:FBIAgent = new FBIAgent(agentLoc.x, agentLoc.y+_floorMap.y, _player, _floorMap);
+				_agents.add(agent);
+			}
+			this.add(_agents);
 		}
 		
 		public override function update():void
 		{
 			FlxG.collide(_player, _floorMap);
 			FlxG.collide(_player, _borderMap);
-			FlxG.collide(_agent, _floorMap);
+			FlxG.collide(_agents, _floorMap);
 			
 			super.update()
 		}
@@ -157,29 +184,41 @@ package GameStates
 				_player.visible = false;
 			}
 			//Same with the FBI Agent
-			if(_agent.inTrainDoors && _agent.active)
+			for each(var agent:FBIAgent in _agents.members)
 			{
-				_agent.insideTrain = true;
-				_agent.active = false;
-				_agent.visible = false;
+				if(agent.inTrainDoors && agent.active)
+				{
+					agent.insideTrain = true;
+					agent.active = false;
+					agent.visible = false;
+				}
 			}
 		}
 		
 		//Function that's called when the train leaves the station. Time to check victory and loss conditions
 		public function onTrainLeaveStation():void
 		{
+			var agentInTrain:Boolean = false;
+			for each(var agent:FBIAgent in _agents.members)
+			{
+				if(agent.insideTrain)
+					agentInTrain = true;
+			}
 			//Now check our victory and loss conditions
 			if(_player.insideTrain)
 			{
-				if(_agent.insideTrain)
+				if(agentInTrain)
 					trace("LOSE!!");
 				else
 					trace("WIN!!");
 			}
 			//let the FBI Agents dissapear if they get in the train without the player
-			else if(_agent.insideTrain)
+			else if(agentInTrain)
 			{
-				_agent.insideTrain = false;
+				for each(var agent:FBIAgent in _agents.members)
+				{
+					agent.insideTrain = false;
+				}
 			}
 			
 			
