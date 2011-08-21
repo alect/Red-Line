@@ -46,7 +46,11 @@ package Utilities
 					
 					if (dataElement.@tx == 0 && dataElement.@ty == 0) 
 					{
-						tileArray[canonicalX][canonicalY] = 1; // Place a wall
+						tileArray[canonicalX][canonicalY] = 2; // Place a wall
+					}
+					if (dataElement.@tx == 40 && dataElement.@ty == 0)
+					{
+						tileArray[canonicalX][canonicalY] = 1; // Place a puddle
 					}
 					if (dataElement.@tx == 10 && dataElement.@ty == 0)
 					{

@@ -22,7 +22,7 @@ package GameObjects
 		private static const MAX_DIS_TO_PLAYER:Number = 50;
 		
 		//the speed we follow the player at
-		private static const WALK_SPEED:Number = 70;
+		private var WALK_SPEED:Number = 70;
 		
 		//looks like I'll at least need a variable to tell if we're following the player
 		private var _followingPlayer:Boolean = false;
@@ -137,6 +137,19 @@ package GameObjects
 					this.y = 70;
 			}
 			
+			//and let's adjust our walk speed if we're on a puddle
+			var floorLoc:FlxPoint = new FlxPoint(Math.floor((this.x - _map.x)/Globals.GRID_CELL_SIZE), Math.floor((this.y-_map.y)/Globals.GRID_CELL_SIZE));
+			if(floorLoc.x > 0 && floorLoc.y > 0)
+			{
+				var tile:int = _map.getTile(int(floorLoc.x), int(floorLoc.y));
+				if(tile == 1)
+					this.WALK_SPEED = 10;
+				else
+					this.WALK_SPEED = 70;
+				
+				if(this.pathSpeed != 0)
+					this.pathSpeed = WALK_SPEED;
+			}
 		}
 		
 		private function followPlayer():void
@@ -221,7 +234,7 @@ package GameObjects
 					else if(j < Math.floor(_map.y/Globals.GRID_CELL_SIZE))
 						column.push(_topOfMap[j-2][i]);
 					else
-						column.push(_map.getTile(i, j-Math.floor(_map.y/Globals.GRID_CELL_SIZE)));
+						column.push( (_map.getTile(i, j-Math.floor(_map.y/Globals.GRID_CELL_SIZE)) > 1)?1:0);
 				}
 				
 				simpleMap.push(column);
