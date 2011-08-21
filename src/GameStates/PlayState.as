@@ -11,6 +11,7 @@ package GameStates
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	import org.flixel.FlxTilemap;
 	
 	public class PlayState extends FlxState
@@ -20,7 +21,7 @@ package GameStates
 		public static var Instance:PlayState;
 		
 		//the trainTracks to render
-		var _trainTracks:FlxSprite;
+		private var _trainTracks:FlxSprite;
 		
 		
 		//the player character in this instance. 
@@ -35,35 +36,7 @@ package GameStates
 		
 		//the floor everyone hangs out on. 
 		private var _floorMap:FlxTilemap;
-		
-		//A test string to test out the tilemap for now
-		private var _simpleMap:String = 
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n" +
-			"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n";
-		
-		
+	
 		
 		//The map used to represent the border of the world. Simple way of keeping the player off the screen.
 		//Notice how it specifically has marks carved out for the train doors
@@ -93,8 +66,39 @@ package GameStates
 			"1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1\n" +
 			"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\n";
 		
+		//and our current level index
+		private var _currentLevelIndex:int = 0;
+		private var _currentLevel:Level;
+		
+		//Here is some text to indicate whether we've won or lost
+		//along with some booleans to allow us to reset and shit
+		private var _loseText:FlxText;
+		private var _resetText:FlxText;
+		private var _lost:Boolean = false;
+		
+		private var _winText:FlxText;
+		private var _nextLevelText:FlxText;
+		private var _won:Boolean = false;
+		
+		
+		
 		public override function create():void
 		{
+			
+			//Here let's make some basic UI stuff
+			_loseText = new FlxText(0, 70, FlxG.width, "Capture! You didn't lose 'em!");
+			_loseText.alignment = "center";
+			_loseText.size = 16;
+			_resetText = new FlxText(0, 90, FlxG.width, "Click to reset level");
+			_resetText.alignment = "center";
+			
+			_winText = new FlxText(0, 70, FlxG.width, "Escape! You lost 'em!");
+			_winText.alignment = "center";
+			_winText.size = 16;
+			_nextLevelText = new FlxText(0, 90, FlxG.width, "Click for next level");
+			_nextLevelText.alignment = "center";
+			
+			
 			
 			//The border map doesn't even have to be visible, but we'll just put it at the bottom for now. 
 			_borderMap = new FlxTilemap();
@@ -107,18 +111,11 @@ package GameStates
 			_trainTracks = new FlxSprite(0, 0, ResourceManager.trainTrackArt);
 			
 			//Let's test out loading our levels. 
-			var testLevel:Level = LevelLoader.loadLevel(ResourceManager.testLevel);
-			
+			_currentLevel = LevelLoader.loadLevel(ResourceManager.levelList[_currentLevelIndex]);
 			
 			//and let's load from our level. 
 			clearLevel();
-			loadFromLevel(testLevel);
-			
-			
-			
-			
-			
-			
+			loadFromLevel(_currentLevel);
 			
 			Instance = this;
 			
@@ -127,6 +124,8 @@ package GameStates
 		private function clearLevel():void
 		{
 			this.clear();
+			_lost = false;
+			_won = false;
 			this.add(_borderMap);
 			this.add(_trainTracks);
 		}
@@ -155,9 +154,29 @@ package GameStates
 		
 		public override function update():void
 		{
+			
+			
 			FlxG.collide(_player, _floorMap);
 			FlxG.collide(_player, _borderMap);
 			FlxG.collide(_agents, _floorMap);
+			
+			if(_lost && FlxG.mouse.justPressed())
+			{
+				clearLevel();
+				loadFromLevel(_currentLevel);
+			}
+			if(_won && FlxG.mouse.justPressed())
+			{
+				if(_currentLevelIndex + 1 < ResourceManager.levelList.length)
+				{
+					_currentLevelIndex++;
+					_currentLevel = LevelLoader.loadLevel(ResourceManager.levelList[_currentLevelIndex]);
+					clearLevel();
+					loadFromLevel(_currentLevel);
+				}
+				else
+					trace("NO MORE LEVELS!!");
+			}
 			
 			super.update()
 		}
@@ -208,16 +227,24 @@ package GameStates
 			if(_player.insideTrain)
 			{
 				if(agentInTrain)
-					trace("LOSE!!");
+				{
+					this.add(_loseText);
+					this.add(_resetText);
+					_lost = true;
+				}
 				else
-					trace("WIN!!");
+				{
+					this.add(_winText);
+					this.add(_nextLevelText);
+					_won = true;
+				}
 			}
 			//let the FBI Agents dissapear if they get in the train without the player
 			else if(agentInTrain)
 			{
-				for each(var agent:FBIAgent in _agents.members)
+				for each(var agentAgain:FBIAgent in _agents.members)
 				{
-					agent.insideTrain = false;
+					agentAgain.insideTrain = false;
 				}
 			}
 			
