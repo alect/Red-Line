@@ -76,7 +76,7 @@ package GameStates
 		{
 			//Jump to the play-state if it's time
 			if(FlxG.mouse.justPressed())
-				FlxG.switchState(new PlayState());
+				FlxG.switchState(new TutorialState());
 			super.update();
 		}
 	}
