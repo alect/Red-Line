@@ -155,7 +155,7 @@ package GameObjects
 		private function followPlayer():void
 		{
 			
-			var startPoint:FlxPoint = new FlxPoint(Math.floor(this.x/Globals.GRID_CELL_SIZE), Math.floor(this.y/Globals.GRID_CELL_SIZE));
+			var startPoint:FlxPoint = new FlxPoint(Math.max(0, Math.floor(this.x/Globals.GRID_CELL_SIZE)), Math.max(0, Math.floor(this.y/Globals.GRID_CELL_SIZE)));
 			var destPoint:FlxPoint = new FlxPoint(Math.floor(_player.x/Globals.GRID_CELL_SIZE), Math.floor(_player.y/Globals.GRID_CELL_SIZE));
 			var map:Array = createAStarMap();
 			var columns:int = map.length;
@@ -194,7 +194,7 @@ package GameObjects
 			}
 			
 			//now that we have the closest door, we need to find a path to it. 
-			var startPoint:FlxPoint = new FlxPoint(Math.floor(this.x/Globals.GRID_CELL_SIZE), Math.floor(this.y/Globals.GRID_CELL_SIZE));
+			var startPoint:FlxPoint = new FlxPoint(Math.max(0, Math.floor(this.x/Globals.GRID_CELL_SIZE)), Math.max(0, Math.floor(this.y/Globals.GRID_CELL_SIZE)));
 			var destPoint:FlxPoint = new FlxPoint(Math.floor((closestDoor.x+closestDoor.width/2)/Globals.GRID_CELL_SIZE), Math.floor((closestDoor.y+closestDoor.height/2)/Globals.GRID_CELL_SIZE));
 			var map:Array = createAStarMap();
 			var columns:int = map.length;
@@ -239,7 +239,31 @@ package GameObjects
 				
 				simpleMap.push(column);
 			}
+			
+			//now let's do a run through the agents to see where they are for reference. 
+			for each(var otherAgent:FBIAgent in PlayState.Instance.agents.members)
+			{
+				if(otherAgent != this)
+				{
+					var gridPos:FlxPoint = otherAgent.getGridPos();
+					//do this if we're in bounds
+					if(gridPos.x > 0 && gridPos.x < simpleMap.length && gridPos.y > 0 && gridPos.y < simpleMap[0].length)
+						simpleMap[int(gridPos.x)][int(gridPos.y)] = 1;
+				}
+			}
+			
 			return simpleMap;
+		}
+		
+		public function getGridPos():FlxPoint
+		{
+			return new FlxPoint(Math.floor((this.x)/Globals.GRID_CELL_SIZE), Math.floor((this.y)/Globals.GRID_CELL_SIZE));
+		}
+		
+		//if we hit another agent, we need to recalculate
+		public function hitOtherAgent():void
+		{
+			this.stopFollowingPath(true);	
 		}
 	}
 }

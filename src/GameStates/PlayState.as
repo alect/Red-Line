@@ -30,6 +30,12 @@ package GameStates
 		
 		//the fbi agents to follow the player
 		private var _agents:FlxGroup;
+		//and let's make this globally available so the agents can use it for their calculations
+		public function get agents():FlxGroup
+		{
+			return _agents;
+		}
+		
 		
 		//the commuters to get in the way and/or help the player
 		private var _commuters:FlxGroup;
@@ -176,6 +182,10 @@ package GameStates
 			FlxG.collide(_player, _borderMap);
 			FlxG.collide(_agents, _floorMap);
 			FlxG.collide(_agents, _borderMap);
+			
+			//Here's where we handle having the agents collide
+			//FlxG.collide(_agents, _agents);
+			FlxG.overlap(_agents, _agents, function(agent1:FBIAgent, agent2:FBIAgent):void { agent1.hitOtherAgent();} );
 			
 			
 			if(_lost && FlxG.mouse.justPressed())
