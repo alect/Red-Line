@@ -148,7 +148,12 @@ package GameObjects
 					this.WALK_SPEED = 80;
 				
 				if(this.pathSpeed != 0)
-					this.pathSpeed = WALK_SPEED;
+				{
+					if(_boardingTrain)
+						this.pathSpeed = 1.5*WALK_SPEED;
+					else
+						this.pathSpeed = WALK_SPEED;
+				}
 			}
 		}
 		
